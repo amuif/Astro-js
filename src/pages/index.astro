@@ -1,39 +1,44 @@
 ---
-import NavBar from "../components/nav-bar.astro";
-import Welcome from "../components/Welcome.astro";
-import Steps from "../components/steps.astro";
-import TrustedBy from "../components/trusted-by.astro";
-import FAQ from "../components/faq.astro";
-import Footer from "../components/footer.astro";
-import BookDemo from "../components/book-demo.astro";
-import FeatureBento from "../components/feature-bento.astro";
-import Layout from "../layouts/Layout.astro";
-import "../styles/global.css";
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+// const user = { name: 'Mario', email: 'mario@bookbites.com' }
+
+const getUser = () => {
+	return Math.random() < 0.5 ? null : {
+		name: 'mario',
+		email: 'mario@bookbites.com'
+	}
+}
+
+let user = getUser()
+
 ---
 
-<Layout>
-	<div class="sticky top-5">
-		<NavBar />
+<BaseLayout>
+	<div class="content">
+		{user && (
+			<h2>Welcome, {user.name}</h2>
+			<p>Logged in as {user.email}</p>
+		)}
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, quas!</p>
+		<a href="/books">Take a look at my reviews</a>
 	</div>
-	<div class="">
-		<Welcome />
-		<TrustedBy/>
-		<Steps />
-		<FeatureBento
-			tag="Integrate"
-			title="Connect data in seconds."
-			description="We support over 200+ integrations out of the box. No manual mapping required."
-			image="/path-to-your-isometric-image.png"
-		/>
-		<FeatureBento
-			tag="Analyze"
-			title="Read in plain English."
-			description="Stop squinting at spreadsheets. Ask questions in natural language and get answers instantly."
-			image="/path-to-your-isometric-image-2.png"
-			reverse={true}
-		/>
-		<FAQ/>
-		<BookDemo/>
-		<Footer/>
-	</div>
-</Layout>
+</BaseLayout>
+
+<style>
+	.content{
+		text-align: center;
+	}
+	a {
+		display: inline-block;
+		background-color: #7a49c5;
+		color: #fff;
+		padding: 6px 10px;
+		border-radius: 2px;
+		text-decoration: none;
+		margin-top: 20px;
+	}
+	a:hover {
+		background-color: #965ee9;
+	}
+</style>
