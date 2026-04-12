@@ -1,0 +1,45 @@
+---
+const faqs = [
+  { q: "How does the AI process my data?", a: "We use secure, localized models to analyze your data patterns without ever storing sensitive PII on our servers." },
+  { q: "Can I export my reports to CSV or PDF?", a: "Yes, all dashboards and insights can be exported in one click to common formats or synced directly to Google Sheets." },
+  { q: "Do you offer custom integrations?", a: "Our Enterprise plan includes dedicated support for building custom API connectors for your proprietary data sources." },
+];
+---
+
+<section class="py-24 max-w-3xl mx-auto px-6">
+  <h2 class="text-3xl font-bold mb-12 text-center">Frequently asked questions.</h2>
+  
+  <div class="space-y-4">
+    {faqs.map((faq, index) => (
+      <div class="border-b border-white/5">
+        <button 
+          class="faq-button w-full py-6 flex items-center justify-between text-left hover:text-blue-400 transition-colors"
+          data-index={index}
+        >
+          <span class="text-lg font-medium">{faq.q}</span>
+          <svg class="w-5 h-5 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-answer hidden pb-6 text-white/40 leading-relaxed">
+          {faq.a}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const buttons = document.querySelectorAll('.faq-button');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const answer = button.nextElementSibling;
+      const icon = button.querySelector('svg');
+      
+      // Toggle visibility
+      answer?.classList.toggle('hidden');
+      icon?.classList.toggle('rotate-180');
+    });
+  });
+</script>

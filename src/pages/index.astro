@@ -1,9 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import NavBar from "../components/nav-bar.astro";
+import Welcome from "../components/Welcome.astro";
+import Steps from "../components/steps.astro";
+import TrustedBy from "../components/trusted-by.astro";
+import FAQ from "../components/faq.astro";
+import Footer from "../components/footer.astro";
+import BookDemo from "../components/book-demo.astro";
+import FeatureBento from "../components/feature-bento.astro";
+import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 ---
 
 <Layout>
-	<Welcome />
+	<div class="sticky top-5">
+		<NavBar />
+	</div>
+	<div class="">
+		<Welcome />
+		<TrustedBy/>
+		<Steps />
+		<FeatureBento
+			tag="Integrate"
+			title="Connect data in seconds."
+			description="We support over 200+ integrations out of the box. No manual mapping required."
+			image="/path-to-your-isometric-image.png"
+		/>
+		<FeatureBento
+			tag="Analyze"
+			title="Read in plain English."
+			description="Stop squinting at spreadsheets. Ask questions in natural language and get answers instantly."
+			image="/path-to-your-isometric-image-2.png"
+			reverse={true}
+		/>
+		<FAQ/>
+		<BookDemo/>
+		<Footer/>
+	</div>
 </Layout>

@@ -1,0 +1,20 @@
+---
+const steps = [
+  { id: '01', title: 'Connect Data', desc: 'Sync your accounts in one click.' },
+  { id: '02', title: 'Analyze', desc: 'Our AI processes every data point.' },
+  { id: '03', title: 'Visualize', desc: 'Get clean, actionable reports.' },
+];
+---
+<section class="py-24 max-w-6xl mx-auto px-6 border-y border-white/5">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+    {steps.map(step => (
+      <div class="group">
+        <div class="text-sm font-mono text-white/30 mb-4 group-hover:text-blue-400 transition-colors">
+          // {step.id}
+        </div>
+        <h3 class="text-xl font-semibold mb-2">{step.title}</h3>
+        <p class="text-white/40 leading-relaxed">{step.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>

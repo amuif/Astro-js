@@ -1,0 +1,46 @@
+---
+// You can replace these with your actual logo SVGs or paths
+const companies = [
+  { name: 'Acme Corp', logo: '/logos/acme.svg' },
+  { name: 'Globex', logo: '/logos/globex.svg' },
+  { name: 'Soylent Corp', logo: '/logos/soylent.svg' },
+  { name: 'Initech', logo: '/logos/initech.svg' },
+  { name: 'Umbrella', logo: '/logos/umbrella.svg' },
+];
+---
+
+<section class="py-20 border-y border-white/5 bg-white/1 ">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-center text-sm font-medium text-white uppercase tracking-[0.3em] mb-12">
+      Trusted by the world's most innovative teams
+    </p>
+    
+    <div class="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-40   transition-all duration-700">
+      {companies.map(company => (
+        <div class="h-8 w-auto group">
+          <span class="text-xl font-bold  text-white  transition-colors cursor-default">
+            {company.name}
+          </span>
+          </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .logo-track {
+    display: flex;
+    width: calc(250px * 10); /* Adjust based on logo count */
+    animation: scroll 30s linear infinite;
+  }
+  
+  /* Pause on hover for better UX */
+  .logo-track:hover {
+    animation-play-state: paused;
+  }
+</style>

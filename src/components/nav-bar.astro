@@ -1,0 +1,65 @@
+---
+const navLinks = [
+  { name: 'Features', href: '#features' },
+  { name: 'Method', href: '#method' },
+  { name: 'Customers', href: '#customers' },
+  { name: 'Changelog', href: '#changelog' },
+  { name: 'Pricing', href: '#pricing' },
+];
+---
+
+<nav 
+  id="main-nav"
+  class="fixed top-0 left-0 right-0 z-100 border-b border-transparent transition-all duration-300 group/nav hover:bg-[#050505] hover:border-white/10"
+>
+  <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+    
+    <a href="/" class="flex items-center gap-2.5">
+      <div class="w-6 h-6 bg-white rounded-sm flex items-center justify-center">
+        <div class="w-2.5 h-2.5 bg-[#050505] rounded-full"></div>
+      </div>
+      <span class="text-white font-bold tracking-tighter text-lg">Insight</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-1">
+      {navLinks.map(link => (
+        <a 
+          href={link.href} 
+          class="px-4 py-1.5 text-[13px] font-medium text-white/50 hover:text-white transition-colors"
+        >
+          {link.name}
+        </a>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button class="text-[13px] font-medium text-white/50 hover:text-white px-4">
+        Log in
+      </button>
+      <button class="px-5 py-1.5 bg-white text-black text-[13px] font-bold rounded-full hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all">
+        Sign up
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  /* This ensures the navbar becomes solid when scrolling */
+  .nav-scrolled {
+    background-color: rgba(5, 5, 5, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      nav?.classList.add('nav-scrolled');
+    } else {
+      nav?.classList.remove('nav-scrolled');
+    }
+  });
+</script>

@@ -1,0 +1,26 @@
+---
+const { tag, title, description, image, reverse = false } = Astro.props;
+---
+<div class={`flex flex-col md:flex-row items-center gap-16 py-20 ${reverse ? 'md:flex-row-reverse' : ''}`}>
+  <div class="flex-1 space-y-6">
+    <div class="text-xs uppercase tracking-[0.2em] text-blue-500 font-bold">{tag}</div>
+    <h2 class="text-4xl font-semibold tracking-tight">{title}</h2>
+    <p class="text-white/40 text-lg leading-relaxed">{description}</p>
+    
+    <ul class="space-y-3">
+      {['Automated reporting', 'Real-time sync', 'Custom exports'].map(item => (
+        <li class="flex items-center gap-3 text-white/60">
+          <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+          </svg>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="flex-1 w-full aspect-square rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent p-8 flex items-center justify-center relative overflow-hidden group">
+    <div class="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    <img src={image} alt={title} class="w-full opacity-60 group-hover:opacity-100 transition-all duration-700 scale-90 group-hover:scale-100" />
+  </div>
+</div>
