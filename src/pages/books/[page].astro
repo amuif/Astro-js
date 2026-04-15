@@ -1,0 +1,203 @@
+---
+import type { GetStaticPathsOptions } from 'astro'
+import { getCollection } from 'astro:content'
+import BookCard from '../../components/BookCard.astro'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const books = await getCollection('books')
+  return paginate(books, { pageSize: 6 })
+}
+
+const { page } = Astro.props
+---
+
+<BaseLayout title={`Books — Page ${page.currentPage}`}>
+	<section class="books-page">
+		<div class="books-header">
+			<span class="books-tag">Collection</span>
+			<h1>Book <span class="gradient-text">Reviews</span></h1>
+			<p class="books-subtitle">Our curated collection of honest, spoiler-free reviews.</p>
+		</div>
+
+		{page.data.length > 0 ? (
+			<div class="books-grid">
+				{page.data.map(book => (
+					<BookCard book={book} />
+				))}
+			</div>
+		) : (
+			<div class="empty-state">
+				<span class="empty-icon">📖</span>
+				<p>No books to show yet. Check back soon!</p>
+			</div>
+		)}
+
+		{page.lastPage > 1 && (
+			<nav class="pagination">
+				{page.url.prev ? (
+					<a href={page.url.prev} class="btn-pagination">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+						Prev
+					</a>
+				) : (
+					<span class="btn-pagination disabled">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+						Prev
+					</span>
+				)}
+
+				<div class="page-info">
+					Page <span class="current">{page.currentPage}</span> of {page.lastPage}
+				</div>
+
+				{page.url.next ? (
+					<a href={page.url.next} class="btn-pagination">
+						Next
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+					</a>
+				) : (
+					<span class="btn-pagination disabled">
+						Next
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+					</span>
+				)}
+			</nav>
+		)}
+	</section>
+</BaseLayout>
+
+<style>
+	.books-page {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 100px 32px 80px; /* Increased padding as requested */
+	}
+
+	/* ─── Header ─── */
+	.books-header {
+		text-align: center;
+		margin-bottom: 80px;
+	}
+
+	.books-tag {
+		display: inline-block;
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--accent-light);
+		font-weight: 600;
+		margin-bottom: 12px;
+	}
+
+	.books-header h1 {
+		font-size: clamp(2.4rem, 6vw, 3.6rem);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		margin-bottom: 16px;
+	}
+
+	.books-subtitle {
+		font-size: 1.15rem;
+		color: var(--text-muted);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	/* ─── Grid ─── */
+	.books-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+		gap: 32px;
+		margin-bottom: 80px;
+	}
+
+	/* ─── Pagination ─── */
+	.pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 24px;
+		margin-top: 40px;
+		padding-top: 40px;
+		border-top: 1px solid var(--border-subtle);
+	}
+
+	.btn-pagination {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 20px;
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: var(--radius-md);
+		color: var(--text-secondary);
+		font-size: 0.9rem;
+		font-weight: 600;
+		transition: all var(--transition-base);
+		cursor: pointer;
+	}
+
+	.btn-pagination:not(.disabled):hover {
+		color: var(--text-primary);
+		border-color: var(--accent);
+		background: rgba(16, 185, 129, 0.05);
+		transform: translateY(-2px);
+	}
+
+	.btn-pagination.disabled {
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+
+	.page-info {
+		font-size: 0.92rem;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+
+	.page-info .current {
+		color: var(--accent-light);
+		font-weight: 700;
+	}
+
+	/* ─── Empty State ─── */
+	.empty-state {
+		text-align: center;
+		padding: 100px 32px;
+		border: 1px dashed var(--border-subtle);
+		border-radius: var(--radius-lg);
+	}
+
+	.empty-icon {
+		font-size: 3rem;
+		display: block;
+		margin-bottom: 20px;
+	}
+
+	.empty-state p {
+		color: var(--text-muted);
+		font-size: 1.1rem;
+	}
+
+	/* ─── Responsive ─── */
+	@media (max-width: 640px) {
+		.books-page {
+			padding: 80px 20px 60px;
+		}
+
+		.books-grid {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+		
+		.pagination {
+			gap: 12px;
+		}
+		
+		.btn-pagination {
+			padding: 8px 14px;
+			font-size: 0.85rem;
+		}
+	}
+</style>

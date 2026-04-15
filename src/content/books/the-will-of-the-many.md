@@ -1,7 +1,7 @@
 ---
 title: "The Will of the Many"
 author: "James Islington"
-summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, reprehenderit."
+summary: "Existential croissants and administrative weather systems. Not even geography is stable when emotions are involved."
 rating: 7
 ---
 

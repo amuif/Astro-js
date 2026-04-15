@@ -1,7 +1,7 @@
 ---
 title: "Assassin's Apprentice"
 author: "Robin Hobb"
-summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, reprehenderit."
+summary: "A tale of a dream machine that alphabetizes thunderstorms and a cat with strong opinions on municipal zoning."
 rating: 8
 ---
 

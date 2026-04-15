@@ -1,44 +1,186 @@
 ---
+import { getCollection } from 'astro:content'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-// const user = { name: 'Mario', email: 'mario@bookbites.com' }
-
-const getUser = () => {
-	return Math.random() < 0.5 ? null : {
-		name: 'mario',
-		email: 'mario@bookbites.com'
-	}
-}
-
-let user = getUser()
-
+const books = await getCollection('books')
+const totalReviews = books.length
+const avgRating = (books.reduce((acc, book) => acc + book.data.rating, 0) / totalReviews).toFixed(1)
 ---
 
-<BaseLayout>
-	<div class="content">
-		{user && (
-			<h2>Welcome, {user.name}</h2>
-			<p>Logged in as {user.email}</p>
-		)}
-		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, quas!</p>
-		<a href="/books">Take a look at my reviews</a>
-	</div>
+<BaseLayout title="Book Bites — Bite-sized reviews for curious readers">
+	<section class="hero">
+		<div class="hero-glow"></div>
+		<div class="hero-content">
+			<div class="hero-badge">
+				<span class="badge-dot"></span>
+				<span>Truly bite-sized book reviews</span>
+			</div>
+			<h1>Discover your next <span class="gradient-text">literary obsession</span></h1>
+			<p class="hero-subtitle">
+				Concise, spoiler-free perspectives on the best fantasy and sci-fi. 
+				We dive deep into the soul of the story so you don't have to.
+			</p>
+			<div class="hero-actions">
+				<a href="/books" class="btn btn-primary">
+					Explore the Collection
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M5 12h14M12 5l7 7-7 7"/>
+					</svg>
+				</a>
+				<a href="/about" class="btn btn-ghost">The BookBites Way</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="stats">
+		<div class="stat">
+			<span class="stat-number">{totalReviews}</span>
+			<span class="stat-label">Total Reviews</span>
+		</div>
+		<div class="stat-divider"></div>
+		<div class="stat">
+			<span class="stat-number">{avgRating}</span>
+			<span class="stat-label">Avg Rating</span>
+		</div>
+		<div class="stat-divider"></div>
+		<div class="stat">
+			<span class="stat-number">100%</span>
+			<span class="stat-label">Spoiler Free</span>
+		</div>
+	</section>
 </BaseLayout>
 
 <style>
-	.content{
+	/* ─── Hero ─── */
+	.hero {
+		position: relative;
 		text-align: center;
+		padding: 120px 24px 80px;
+		overflow: hidden;
 	}
-	a {
-		display: inline-block;
-		background-color: #7a49c5;
-		color: #fff;
-		padding: 6px 10px;
-		border-radius: 2px;
-		text-decoration: none;
-		margin-top: 20px;
+
+	.hero-glow {
+		position: absolute;
+		top: -200px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 700px;
+		height: 500px;
+		background: radial-gradient(ellipse, var(--accent-glow), transparent 70%);
+		pointer-events: none;
+		opacity: 0.6;
 	}
-	a:hover {
-		background-color: #965ee9;
+
+	.hero-content {
+		position: relative;
+		z-index: 1;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	/* ─── Badge ─── */
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 16px;
+		border: 1px solid var(--border-subtle);
+		border-radius: 100px;
+		font-size: 0.82rem;
+		color: var(--text-secondary);
+		margin-bottom: 32px;
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.badge-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent-light);
+		animation: pulse-glow 2s ease-in-out infinite;
+	}
+
+	/* ─── Heading ─── */
+	.hero h1 {
+		font-size: clamp(2.4rem, 6vw, 3.8rem);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.15;
+		margin-bottom: 20px;
+	}
+
+	.hero-subtitle {
+		font-size: 1.15rem;
+		color: var(--text-muted);
+		line-height: 1.8;
+		max-width: 540px;
+		margin: 0 auto 40px;
+	}
+
+	/* ─── Actions ─── */
+	.hero-actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	/* ─── Stats ─── */
+	.stats {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 48px;
+		padding: 48px 24px;
+		border-top: 1px solid var(--border-subtle);
+		border-bottom: 1px solid var(--border-subtle);
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.stat-number {
+		font-size: 2rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		background: linear-gradient(135deg, var(--text-primary), var(--accent-light));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.stat-label {
+		font-size: 0.82rem;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.stat-divider {
+		width: 1px;
+		height: 48px;
+		background: var(--border-subtle);
+	}
+
+	/* ─── Responsive ─── */
+	@media (max-width: 640px) {
+		.hero {
+			padding: 80px 20px 60px;
+		}
+
+		.stats {
+			gap: 24px;
+		}
+
+		.stat-number {
+			font-size: 1.5rem;
+		}
 	}
 </style>

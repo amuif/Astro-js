@@ -1,3 +1,20 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title?: string
+}
+
+const { title = 'Book Bites' } = Astro.props
+const currentPath = Astro.url.pathname
+
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Books', href: '/books' },
+]
+---
+
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
@@ -5,71 +22,228 @@
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-		<meta name="viewport" content="width=device-width" />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Book Bites</title>
+		<meta name="description" content="Book Bites — Bite-sized book reviews for curious readers." />
+		<title>{title}</title>
 	</head>
 	<body>
-		<header>
-      <h1>Book Bites</h1>
-			<nav>
-				<ul>
-					<li><a href="/">Home</a></li>
-					<li><a href="/about">About</a></li>
-					<li><a href="/books">Books</a></li>
-				</ul>
-			</nav>
+		<header id="site-header">
+			<div class="header-inner">
+				<a href="/" class="logo">
+					<span class="logo-icon">📚</span>
+					<span class="logo-text">Book<span class="logo-accent">Bites</span></span>
+				</a>
+				<nav>
+					<ul>
+						{navLinks.map(link => (
+							<li>
+								<a
+									href={link.href}
+									class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+								>
+									{link.name}
+								</a>
+							</li>
+						))}
+					</ul>
+				</nav>
+			</div>
 		</header>
+
 		<main>
-      <slot />
-    </main>
+			<slot />
+		</main>
+
+		<footer>
+			<div class="footer-inner">
+				<p class="footer-brand">📚 Book<span class="logo-accent">Bites</span></p>
+				<p class="footer-copy">© 2026 BookBites. Built with Astro.</p>
+			</div>
+		</footer>
 	</body>
 </html>
 
 <style>
-	body {
-		margin: 0;
-	}
+	/* ─── Header ─── */
 	header {
-		background-color: #f9f6fc;
-		padding: 10px 20px;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(10, 10, 15, 0.6);
+		backdrop-filter: blur(20px) saturate(1.4);
+		-webkit-backdrop-filter: blur(20px) saturate(1.4);
+		border-bottom: 1px solid var(--border-subtle);
+		transition: all var(--transition-base);
+	}
+
+	.header-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 24px;
+		height: 64px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
 
-		h1 {
-			margin: 0;
+	/* ─── Logo ─── */
+	.logo {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
+		transition: opacity var(--transition-fast);
+	}
+
+	.logo:hover {
+		opacity: 0.8;
+	}
+
+	.logo-icon {
+		font-size: 1.4rem;
+	}
+
+	.logo-text {
+		font-size: 1.25rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: var(--text-primary);
+	}
+
+	.logo-accent {
+		background: linear-gradient(135deg, var(--accent), var(--accent-light));
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	/* ─── Nav ─── */
+	nav ul {
+		display: flex;
+		list-style: none;
+		gap: 4px;
+		padding: 0;
+		margin: 0;
+	}
+
+	.nav-link {
+		display: block;
+		padding: 8px 18px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--text-secondary);
+		border-radius: var(--radius-sm);
+		transition: all var(--transition-fast);
+		position: relative;
+	}
+
+	.nav-link:hover {
+		color: var(--text-primary);
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	.nav-link.active {
+		color: var(--accent-light);
+		background: rgba(16, 185, 129, 0.1);
+	}
+
+	/* ─── Main ─── */
+	main {
+		min-height: calc(100vh - 64px - 120px);
+	}
+
+	/* ─── Footer ─── */
+	footer {
+		border-top: 1px solid var(--border-subtle);
+		padding: 40px 24px;
+		margin-top: 80px;
+	}
+
+	.footer-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.footer-brand {
+		font-size: 1.1rem;
+		font-weight: 600;
+	}
+
+	.footer-copy {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+	}
+
+	/* ─── Responsive ─── */
+	@media (max-width: 640px) {
+		.header-inner {
+			padding: 0 16px;
 		}
-		ul {
-			display: flex;
-			list-style-type: none;
-			gap: 16px;
+
+		nav ul {
+			gap: 0;
 		}
-		a {
-			text-decoration: none;
-			border-bottom: 1px dashed;
+
+		.nav-link {
+			padding: 8px 12px;
+			font-size: 0.82rem;
+		}
+
+		.footer-inner {
+			flex-direction: column;
+			gap: 12px;
+			text-align: center;
 		}
 	}
 </style>
 
 <style is:global>
-	* {
-		font-family: "Poppins", sans-serif;
-		color: #333;
-	}
+	/* ─── Content Container ─── */
 	.content {
 		width: 100%;
 		max-width: 1200px;
-		margin: 60px auto;
-		padding: 0 20px;
+		margin: 0 auto;
+		padding: 60px 24px;
 		box-sizing: border-box;
+	}
 
-		h2 {
-			font-size: 1.8em;
-		}
-		p {
-			font-size: 1.2em;
-		}
+	.content h2 {
+		font-size: 2.2rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.2;
+		margin-bottom: 16px;
+	}
+
+	.content p {
+		font-size: 1.1rem;
+		color: var(--text-secondary);
+		line-height: 1.8;
+	}
+
+	/* ─── Markdown prose ─── */
+	.content h1 { font-size: 2.4rem; margin-bottom: 16px; }
+	.content h3 { font-size: 1.4rem; margin: 32px 0 12px; }
+	.content ul, .content ol { padding-left: 24px; color: var(--text-secondary); }
+	.content li { margin-bottom: 8px; }
+	.content blockquote {
+		border-left: 3px solid var(--accent);
+		padding: 12px 20px;
+		margin: 24px 0;
+		background: rgba(16, 185, 129, 0.06);
+		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+		color: var(--text-secondary);
+		font-style: italic;
+	}
+	.content hr {
+		border: none;
+		height: 1px;
+		background: var(--border-subtle);
+		margin: 40px 0;
 	}
 </style>

@@ -6,31 +6,163 @@ interface Props {
 }
 
 const { book } = Astro.props
+
+// Generate filled/empty stars
+const rating = book.data.rating
+const maxRating = 10
 ---
 
-<div class="book-card">
-  <p class="book-title">{book.data.title}, {book.data.rating}/10</p>
-  <p class="book-author">by {book.data.author}</p>
-  <p class="book-summary">{book.data.summary}</p>
-  <a href={`/books/${book.id}`}>Read Review</a>
-</div>
+<a href={`/books/${book.id}`} class="book-card">
+  <div class="card-inner">
+    <div class="card-header">
+      <h3 class="book-title">{book.data.title}</h3>
+      <div class="book-rating">
+        <div class="stars">
+          {Array.from({ length: 5 }).map((_, i) => {
+            const starValue = (i + 1) * 2
+            return (
+              <svg
+                class:list={['star', { filled: rating >= starValue, half: rating >= starValue - 1 && rating < starValue }]}
+                width="16" height="16" viewBox="0 0 24 24"
+                fill={rating >= starValue ? 'currentColor' : 'none'}
+                stroke="currentColor" stroke-width="1.5"
+              >
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            )
+          })}
+        </div>
+        <span class="rating-number">{rating}/10</span>
+      </div>
+    </div>
+    <p class="book-author">by {book.data.author}</p>
+    <p class="book-summary">{book.data.summary}</p>
+    <span class="read-link">
+      Read Review
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </span>
+  </div>
+</a>
 
 <style>
   .book-card {
-		background-color: #f9f6fc;
-		padding: 16px 20px;
-		margin: 20px auto;
-		box-shadow: 8px 8px 0 #ebe5f2;
-	}
-	.book-title {
-		font-size: 1.4em;
-		font-weight: bold;
-		margin: 0;
-	}
-	.book-author {
-		margin-top: 0;
-	}
+    display: block;
+    text-decoration: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    position: relative;
+  }
+
+  .book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .book-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-6px);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(16, 185, 129, 0.1);
+  }
+
+  .book-card:hover::before {
+    opacity: 1;
+  }
+
+  .card-inner {
+    padding: 28px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .book-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  /* ─── Rating ─── */
+  .book-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .stars {
+    display: flex;
+    gap: 2px;
+  }
+
+  .star {
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .star.filled {
+    color: #f59e0b;
+  }
+
+  .star.half {
+    color: #f59e0b;
+    opacity: 0.5;
+  }
+
+  .rating-number {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ─── Meta ─── */
+  .book-author {
+    font-size: 0.88rem;
+    color: var(--accent-light);
+    margin: 0 0 14px;
+    font-weight: 500;
+  }
+
   .book-summary {
-    font-size: 1em;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 20px;
+  }
+
+  /* ─── Link ─── */
+  .read-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-light);
+    transition: gap var(--transition-fast);
+  }
+
+  .book-card:hover .read-link {
+    gap: 10px;
   }
 </style>

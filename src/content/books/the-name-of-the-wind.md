@@ -1,7 +1,7 @@
 ---
 title: "The Name of The Wind"
 author: "Patrick Rothfuss"
-summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, reprehenderit."
+summary: "A suspiciously paperback experience where hallways apologize for existing and gravity is merely a suggestion."
 rating: 9
 ---
 

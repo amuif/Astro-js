@@ -2,10 +2,168 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<BaseLayout>
-	<div class="content">
-		<h2>About</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In harum mollitia inventore accusamus excepturi similique magni quo saepe quis rerum maxime, pariatur ducimus nostrum reprehenderit repudiandae ratione tempora corporis culpa.</p>
-		<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos vero corrupti quis velit! Sed sint mollitia error natus inventore temporibus, architecto rem ipsam libero, in ad reiciendis. Laboriosam, vel maxime.</p>
-	</div>
+<BaseLayout title="About — Book Bites">
+	<section class="about-hero">
+		<div class="about-hero-inner">
+			<span class="about-tag">About Us</span>
+			<h1>We love <span class="gradient-text">great books</span></h1>
+			<p class="about-lead">
+				BookBites is a curated space for honest, bite-sized book reviews.
+				We help curious readers discover their next favorite story — no
+				fluff, no spoilers.
+			</p>
+		</div>
+	</section>
+
+	<section class="mission-grid">
+		<div class="mission-card">
+			<div class="mission-icon">✨</div>
+			<h3>Honest Reviews</h3>
+			<p>Every review is written with genuine passion and critical thought — we tell it like it is.</p>
+		</div>
+		<div class="mission-card">
+			<div class="mission-icon">⚡</div>
+			<h3>Quick & Concise</h3>
+			<p>No 2,000-word essays. Get the insights you need in under 2 minutes of reading.</p>
+		</div>
+		<div class="mission-card">
+			<div class="mission-icon">🔒</div>
+			<h3>Spoiler Free</h3>
+			<p>We respect your reading experience. Every review is carefully crafted to avoid plot spoilers.</p>
+		</div>
+	</section>
+
+	<section class="about-content">
+		<div class="about-section">
+			<h2>The Origin</h2>
+			<p>
+				BookBites began as a solution to a common problem: the "Endless Scroll" of 
+				thousand-word reviews that spoil the ending before you've even started the first chapter. 
+				We wanted something different—a place where the essence of a book could be captured 
+				in the time it takes to finish a cup of coffee.
+			</p>
+		</div>
+		<div class="about-divider"></div>
+		<div class="about-section">
+			<h2>Our Curation</h2>
+			<p>
+				We don't review everything. We focus on the heavy hitters of speculative fiction—the 
+				shapers of worlds and the masters of magic. From the grit of Joe Abercrombie to 
+				the intricate systems of Brandon Sanderson, we provide the honest take that 
+				helps you decide what's worth your limited reading time.
+			</p>
+		</div>
+	</section>
 </BaseLayout>
+
+<style>
+	/* ─── Hero ─── */
+	.about-hero {
+		text-align: center;
+		padding: 100px 24px 60px;
+	}
+
+	.about-hero-inner {
+		max-width: 640px;
+		margin: 0 auto;
+	}
+
+	.about-tag {
+		display: inline-block;
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--accent-light);
+		font-weight: 600;
+		margin-bottom: 16px;
+	}
+
+	.about-hero h1 {
+		font-size: clamp(2rem, 5vw, 3.2rem);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		margin-bottom: 20px;
+	}
+
+	.about-lead {
+		font-size: 1.1rem;
+		color: var(--text-secondary);
+		line-height: 1.8;
+	}
+
+	/* ─── Mission Grid ─── */
+	.mission-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 20px;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 0 24px 60px;
+	}
+
+	.mission-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border-subtle);
+		border-radius: var(--radius-md);
+		padding: 32px 28px;
+		transition: all var(--transition-base);
+	}
+
+	.mission-card:hover {
+		background: var(--bg-card-hover);
+		border-color: var(--border-hover);
+		transform: translateY(-4px);
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+	}
+
+	.mission-icon {
+		font-size: 1.8rem;
+		margin-bottom: 16px;
+	}
+
+	.mission-card h3 {
+		font-size: 1.15rem;
+		font-weight: 600;
+		margin-bottom: 10px;
+	}
+
+	.mission-card p {
+		font-size: 0.92rem;
+		color: var(--text-secondary);
+		line-height: 1.7;
+	}
+
+	/* ─── Content Sections ─── */
+	.about-content {
+		max-width: 700px;
+		margin: 0 auto;
+		padding: 0 24px 80px;
+	}
+
+	.about-section h2 {
+		font-size: 1.6rem;
+		font-weight: 700;
+		margin-bottom: 16px;
+	}
+
+	.about-section p {
+		font-size: 1.05rem;
+		color: var(--text-secondary);
+		line-height: 1.8;
+	}
+
+	.about-divider {
+		width: 60px;
+		height: 2px;
+		background: linear-gradient(90deg, var(--accent), var(--accent-light));
+		margin: 48px 0;
+		border-radius: 2px;
+	}
+
+	/* ─── Responsive ─── */
+	@media (max-width: 640px) {
+		.about-hero {
+			padding: 70px 20px 40px;
+		}
+	}
+</style>

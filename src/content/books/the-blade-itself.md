@@ -1,7 +1,7 @@
 ---
 title: "The Blade Itself"
 author: "Joe Abercrombie"
-summary: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, reprehenderit."
+summary: "An indoor forest inside a teacup and a mailbox that becomes mayor. A confident disregard for chronology."
 rating: 8
 ---
 
