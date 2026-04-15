@@ -34,32 +34,31 @@ const { page } = Astro.props
 		)}
 
 		{page.lastPage > 1 && (
-			<nav class="pagination">
+			<nav class="pagination" aria-label="Pagination">
 				{page.url.prev ? (
-					<a href={page.url.prev} class="btn-pagination">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+					<a href={page.url.prev} class="btn-pagination" aria-label="Go to previous page">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
 						Prev
 					</a>
 				) : (
-					<span class="btn-pagination disabled">
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+					<span class="btn-pagination disabled" aria-hidden="true">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
 						Prev
 					</span>
 				)}
-
-				<div class="page-info">
+<div class="page-info" aria-live="polite">
 					Page <span class="current">{page.currentPage}</span> of {page.lastPage}
 				</div>
 
 				{page.url.next ? (
-					<a href={page.url.next} class="btn-pagination">
+					<a href={page.url.next} class="btn-pagination" aria-label="Go to next page">
 						Next
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
 					</a>
 				) : (
-					<span class="btn-pagination disabled">
+					<span class="btn-pagination disabled" aria-hidden="true">
 						Next
-						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
 					</span>
 				)}
 			</nav>

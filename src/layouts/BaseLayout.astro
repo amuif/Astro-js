@@ -29,19 +29,21 @@ const navLinks = [
 		<title>{title}</title>
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Skip to main content</a>
 		<header id="site-header">
 			<div class="header-inner">
 				<a href="/" class="logo">
-					<span class="logo-icon">📚</span>
+					<span class="logo-icon" aria-hidden="true">📚</span>
 					<span class="logo-text">Book<span class="logo-accent">Bites</span></span>
 				</a>
-				<nav>
+				<nav aria-label="Global Navigation">
 					<ul>
 						{navLinks.map(link => (
 							<li>
 								<a
 									href={link.href}
 									class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+									aria-current={currentPath === link.href ? 'page' : undefined}
 								>
 									{link.name}
 								</a>
@@ -52,13 +54,13 @@ const navLinks = [
 			</div>
 		</header>
 
-		<main>
+		<main id="main-content" tabindex="-1">
 			<slot />
 		</main>
 
 		<footer>
 			<div class="footer-inner">
-				<p class="footer-brand">📚 Book<span class="logo-accent">Bites</span></p>
+				<p class="footer-brand"><span aria-hidden="true">📚</span> Book<span class="logo-accent">Bites</span></p>
 				<p class="footer-copy">© 2026 BookBites. Built with Astro.</p>
 			</div>
 		</footer>
@@ -177,6 +179,24 @@ const navLinks = [
 	.footer-copy {
 		font-size: 0.85rem;
 		color: var(--text-muted);
+	}
+
+	/* ─── Skip Link ─── */
+	.skip-link {
+		position: absolute;
+		top: -100px;
+		left: 0;
+		background: var(--accent);
+		color: white;
+		padding: 8px 16px;
+		z-index: 1000;
+		transition: top 0.2s;
+		font-weight: 600;
+		border-radius: 0 0 var(--radius-sm) 0;
+	}
+
+	.skip-link:focus {
+		top: 0;
 	}
 
 	/* ─── Responsive ─── */

@@ -16,8 +16,8 @@ const maxRating = 10
   <div class="card-inner">
     <div class="card-header">
       <h3 class="book-title">{book.data.title}</h3>
-      <div class="book-rating">
-        <div class="stars">
+      <div class="book-rating" aria-label={`Rating: ${rating} out of 10`}>
+        <div class="stars" aria-hidden="true">
           {Array.from({ length: 5 }).map((_, i) => {
             const starValue = (i + 1) * 2
             return (
@@ -32,14 +32,14 @@ const maxRating = 10
             )
           })}
         </div>
-        <span class="rating-number">{rating}/10</span>
+        <span class="rating-number" aria-hidden="true">{rating}/10</span>
       </div>
     </div>
     <p class="book-author">by {book.data.author}</p>
     <p class="book-summary">{book.data.summary}</p>
     <span class="read-link">
       Read Review
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </span>
