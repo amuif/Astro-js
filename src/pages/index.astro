@@ -137,6 +137,8 @@ const avgRating = (books.reduce((acc, book) => acc + book.data.rating, 0) / tota
 		border-bottom: 1px solid var(--border-subtle);
 		max-width: 700px;
 		margin: 0 auto;
+		/* Stabilize height to prevent Layout Shift (CLS) during font load */
+		min-height: 150px;
 	}
 
 	.stat {

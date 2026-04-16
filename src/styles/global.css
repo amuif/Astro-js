@@ -26,6 +26,16 @@
 }
 
 /* ─── Reset & Base ─── */
+/* ─── Font Overrides for CLS ─── */
+@font-face {
+  font-family: 'Poppins-Fallback';
+  src: local('Arial');
+  ascent-override: 105%;
+  descent-override: 35%;
+  line-gap-override: 10%;
+  size-adjust: 98%;
+}
+
 *,
 *::before,
 *::after {
@@ -43,7 +53,7 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", "Poppins-Fallback", sans-serif;
   line-height: 1.7;
   min-height: 100vh;
 }
